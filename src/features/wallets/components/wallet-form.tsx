@@ -12,7 +12,7 @@ import { Input } from "@/components/ui/input"
 
 import { Controller, useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { loginSchema, type LoginValues } from "../schemas/auth-schema"
+import { walletSchema, type WalletValues } from "../schemas/wallet-schema"
 import { useLogin } from "../hooks/use-login"
 
 export function LoginForm({

@@ -7,6 +7,8 @@ import { LoginForm } from "@/features/auth/components/login-form"
 import AuthLayout from "@/components/layouts/AuthLayout"
 import MainLayout from "@/components/layouts/MainLayout"
 import { AppInitializer } from "@/components/layouts/AppInitializer"
+import Post from "@/features/post/components/post"
+import DetailPost from "@/features/post/components/detail-post"
 
 // Pages (Idealnya di-import secara lazy loading untuk performa)
 // import { WalletList } from '@/features/wallets/components/WalletList';
@@ -58,6 +60,14 @@ export const router = createBrowserRouter([
               {
                 path: "/transactions",
                 element: <div>Halaman Transaksi (TransactionList)</div>,
+              },
+              {
+                path: "/post",
+                element: <Post />,
+              },
+              {
+                path: "/post/:id",
+                element: <DetailPost />,
               },
               // Rute terproteksi lainnya seperti /categories
             ],

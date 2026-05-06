@@ -18,9 +18,14 @@ import {
   TerminalIcon,
   TerminalSquareIcon,
 } from "lucide-react"
-import { useAuthStore } from "@/store/auth-store"
+// import { useAuthStore } from "@/store/auth-store"
 
 const data = {
+  user: {
+    name: "test",
+    email: "test@example.com",
+    avatar: "#",
+  },
   teams: [
     {
       name: "Acme Inc",
@@ -63,11 +68,16 @@ const data = {
         { title: "Category", url: "/category" },
       ],
     },
+    {
+      title: "Posts",
+      url: "/post",
+      icon: <TerminalSquareIcon />,
+    },
   ],
 }
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  const { user } = useAuthStore()
+  // const { user } = useAuthStore()
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
@@ -77,7 +87,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavMain items={data.navMain} />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={user} />
+        <NavUser user={data.user} />
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>
