@@ -2,15 +2,21 @@
 import { useCallback } from "react"
 import axios from "axios"
 import { getCategoryTypes } from "../api/category-type"
-import { usePostStore } from "../store/category-type-store"
+import { useCategoryTypeStore } from "../store/category-type-store"
 
-export const useGetPosts = () => {
+export const useGetCategoryType = () => {
   // Ambil state dan setter dari store Zustand
-  const { posts, isLoading, error, setPosts, setIsLoading, setError } =
-    usePostStore()
+  const {
+    categoryTypes,
+    isLoading,
+    error,
+    setCategoryTypes,
+    setIsLoading,
+    setError,
+  } = useCategoryTypeStore()
 
   // useCallback digunakan agar fungsi ini tidak dibuat ulang setiap kali komponen dirender
-  const fetchPosts = useCallback(async () => {
+  const fetchCategoryTypes = useCallback(async () => {
     setIsLoading(true)
     setError(null)
 
@@ -19,7 +25,7 @@ export const useGetPosts = () => {
       const data = await getCategoryTypes()
 
       // 2. Simpan ke Store layer
-      setPosts(data)
+      setCategoryTypes(data)
     } catch (err) {
       if (axios.isAxiosError(err)) {
         setError(err.message || "Gagal mengambil data dari server")
@@ -29,13 +35,13 @@ export const useGetPosts = () => {
     } finally {
       setIsLoading(false)
     }
-  }, [setPosts, setIsLoading, setError])
+  }, [setCategoryTypes, setIsLoading, setError])
 
   // Kembalikan data dan fungsi agar bisa digunakan oleh komponen UI
   return {
-    posts,
+    categoryTypes,
     isLoading,
     error,
-    fetchPosts,
+    fetchCategoryTypes,
   }
 }
