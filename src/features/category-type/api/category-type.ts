@@ -38,10 +38,6 @@ export const getCategoryTypes = async (): Promise<CategoryType[]> => {
 export const getCategoryTypesById = async (
   id: string
 ): Promise<CategoryType> => {
-  await new Promise((resolve) => setTimeout(resolve, 1500))
-
-  // return
-
   return new Promise((resolve, reject) => {
     // Simulasi delay jaringan selama 1.5 detik
     setTimeout(() => {
