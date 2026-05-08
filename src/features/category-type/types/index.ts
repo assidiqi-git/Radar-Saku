@@ -1,6 +1,6 @@
 export interface CategoryType {
   id: string
   name: string
-  action: string
-  description: string | null
+  action: "addition" | "deduction" | "neutral"
+  description: string | null | any
 }

@@ -18,12 +18,17 @@ import {
 import { useEffect, useState } from "react"
 import { DialogFormCreate } from "./dialog-form-create"
 import { useGetCategoryType } from "../hooks/use-get-category-type"
+import { PencilIcon, Trash2 } from "lucide-react"
+import { DialogFormEdit } from "./dialog-form-edit"
 
 export function CategoryTypes() {
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false)
+  const [isDialogEditOpen, setIsDialogEditOpen] = useState<boolean>(false)
+  const [selectedId, setSelectedId] = useState<string | null>(null)
 
   const { categoryTypes, isLoading, error, fetchCategoryTypes } =
     useGetCategoryType()
+
   useEffect(() => {
     fetchCategoryTypes()
   }, [fetchCategoryTypes])
@@ -35,9 +40,20 @@ export function CategoryTypes() {
   if (error) {
     return <div className="p-4 text-red-500">Error: {error}</div>
   }
+
+  function handleDialogEdit(id: string) {
+    setSelectedId(id)
+    setIsDialogEditOpen(true)
+  }
+
   return (
     <div className="grid grid-cols-1 gap-4">
       <DialogFormCreate open={isDialogOpen} setOpen={setIsDialogOpen} />
+      <DialogFormEdit
+        open={isDialogEditOpen}
+        setOpen={setIsDialogEditOpen}
+        id={selectedId}
+      ></DialogFormEdit>
       <Card>
         <CardHeader className="w-full">
           <CardTitle>Tipe Kategori</CardTitle>
@@ -57,13 +73,31 @@ export function CategoryTypes() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {categoryTypes.map((invoice, index) => (
-                <TableRow key={invoice.id}>
+              {categoryTypes.map((categoryType, index) => (
+                <TableRow key={categoryType.id}>
                   <TableCell className="font-medium">{index + 1}</TableCell>
-                  <TableCell>{invoice.name}</TableCell>
-                  <TableCell>{invoice.action.toLocaleUpperCase()}</TableCell>
-                  <TableCell>{invoice.description}</TableCell>
-                  <TableCell className="text-right">{invoice.action}</TableCell>
+                  <TableCell>{categoryType.name}</TableCell>
+                  <TableCell>
+                    {categoryType.action.toLocaleUpperCase()}
+                  </TableCell>
+                  <TableCell>{categoryType.description}</TableCell>
+                  <TableCell className="text-right">
+                    <Button
+                      variant="outline"
+                      size="icon"
+                      aria-label="Edit"
+                      onClick={() => handleDialogEdit(categoryType.id)}
+                    >
+                      <PencilIcon />
+                    </Button>
+                    <Button
+                      variant="destructive"
+                      size="icon"
+                      aria-label="Hapus"
+                    >
+                      <Trash2 />
+                    </Button>
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>

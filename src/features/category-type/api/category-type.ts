@@ -4,43 +4,43 @@ import { type CategoryType } from "../types"
 
 const categoryTypes = [
   {
-    id: "INV001",
+    id: "OIASNDIOUASN1",
     name: "Paid",
     action: "addition",
     description: "Credit Card",
   },
   {
-    id: "INV002",
+    id: "OIASNDIOUASN2",
     name: "Pending",
     action: "deduction",
     description: "PayPal",
   },
   {
-    id: "INV003",
+    id: "OIASNDIOUASN3",
     name: "Unpaid",
     action: "addition",
     description: "Bank Transfer",
   },
   {
-    id: "INV004",
+    id: "OIASNDIOUASN4",
     name: "Paid",
     action: "deduction",
     description: "Credit Card",
   },
   {
-    id: "INV005",
+    id: "OIASNDIOUASN5",
     name: "Paid",
     action: "addition",
     description: "PayPal",
   },
   {
-    id: "INV006",
+    id: "OIASNDIOUASN6",
     name: "Pending",
     action: "deduction",
     description: "Bank Transfer",
   },
   {
-    id: "INV007",
+    id: "OIASNDIOUASN7",
     name: "Unpaid",
     action: "addition",
     description: "Credit Card",
@@ -55,4 +55,12 @@ export const getCategoryTypes = async (): Promise<CategoryType[]> => {
     "/api/transaction-types"
   )
   return response.data.data
+}
+
+export const getCategoryTypesById = async (
+  id: string
+): Promise<CategoryType> => {
+  await new Promise((resolve) => setTimeout(resolve, 1500))
+
+  return categoryTypes.find((categoryType) => categoryType.id === id)
 }
