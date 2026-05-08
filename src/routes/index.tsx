@@ -9,6 +9,7 @@ import MainLayout from "@/components/layouts/MainLayout"
 import { AppInitializer } from "@/components/layouts/AppInitializer"
 import Post from "@/features/post/components/post"
 import DetailPost from "@/features/post/components/detail-post"
+import { CategoryTypes } from "@/features/category-type/components/category-type"
 
 // Pages (Idealnya di-import secara lazy loading untuk performa)
 // import { WalletList } from '@/features/wallets/components/WalletList';
@@ -55,7 +56,7 @@ export const router = createBrowserRouter([
               },
               {
                 path: "/category/types",
-                element: <div>Halaman Manajemen tipe kategori </div>,
+                element: <CategoryTypes />,
               },
               {
                 path: "/transactions",
