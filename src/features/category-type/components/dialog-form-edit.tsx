@@ -121,7 +121,7 @@ export function DialogFormEdit({ id, open, setOpen }: DialogFormEditProps) {
                         <FieldLabel htmlFor="form-rhf-demo-title">
                           Aksi Tipe Kategori
                         </FieldLabel>
-                        <Select {...field} onValueChange={field.onChange}>
+                        <Select key={field.value} {...field} onValueChange={field.onChange}>
                           <SelectTrigger className="w-full">
                             <SelectValue placeholder="Pilih action" />
                           </SelectTrigger>
