@@ -24,9 +24,9 @@ const categoryTypes = [
 ]
 
 export const getCategoryTypes = async (): Promise<CategoryType[]> => {
-  await new Promise((resolve) => setTimeout(resolve, 1500))
+  // await new Promise((resolve) => setTimeout(resolve, 1500))
 
-  return categoryTypes
+  // return categoryTypes
 
   // Endpoint standar Laravel Sanctum untuk mengambil profil user yang login
   const response = await axiosInstance.get<{ data: CategoryType[] }>(
@@ -38,20 +38,11 @@ export const getCategoryTypes = async (): Promise<CategoryType[]> => {
 export const getCategoryTypesById = async (
   id: string
 ): Promise<CategoryType> => {
-  return new Promise((resolve, reject) => {
-    // Simulasi delay jaringan selama 1.5 detik
-    setTimeout(() => {
-      // Nanti ganti dengan:
-      // const response = await axios.delete(`/api/items/${id}`);
-      // return response.data;
+  const response = await axiosInstance.get<{ data: CategoryType }>(
+    `/api/transaction-types/${id}`
+  )
 
-      // Simulasi response sukses
-      resolve(categoryTypes.find((categoryType) => categoryType.id === id))
-
-      // Jika ingin mengetes error, uncomment baris di bawah ini dan comment resolve di atas:
-      // reject(new Error('Gagal terhubung ke server saat menghapus data.'));
-    }, 1500)
-  })
+  return response.data.data
 }
 
 export const deleteCategoryType = async (id: string): Promise<any> => {

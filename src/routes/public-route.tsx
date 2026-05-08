@@ -7,9 +7,9 @@ export const PublicRoute = () => {
 
   const from = location.state?.from || "/"
   // Jika sudah login, arahkan langsung ke dashboard/dompet
-  // if (isAuthenticated) {
-  //   return <Navigate to={from} replace />
-  // }
+  if (isAuthenticated) {
+    return <Navigate to={from} replace />
+  }
 
   return <Outlet />
 }

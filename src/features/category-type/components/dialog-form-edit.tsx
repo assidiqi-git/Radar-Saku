@@ -45,6 +45,8 @@ export function DialogFormEdit({ id, open, setOpen }: DialogFormEditProps) {
     fetchCategoryTypeDetail,
   } = useCategoryTypeEdit()
 
+  console.log(currentCategoryType?.action)
+
   const form = useForm<CategoryTypeValues>({
     resolver: zodResolver(categoryTypeSchema),
     values: {
@@ -121,7 +123,7 @@ export function DialogFormEdit({ id, open, setOpen }: DialogFormEditProps) {
                         </FieldLabel>
                         <Select {...field} onValueChange={field.onChange}>
                           <SelectTrigger className="w-full">
-                            <SelectValue placeholder="Select a fruit" />
+                            <SelectValue placeholder="Pilih action" />
                           </SelectTrigger>
                           <SelectContent>
                             <SelectGroup>
@@ -151,7 +153,7 @@ export function DialogFormEdit({ id, open, setOpen }: DialogFormEditProps) {
                           {...field}
                           id="form-rhf-demo-title"
                           aria-invalid={fieldState.invalid}
-                          placeholder="Login button not working on mobile"
+                          placeholder="Lorem ipsum dolor sit amet."
                           autoComplete="off"
                         />
                         {fieldState.invalid && (
