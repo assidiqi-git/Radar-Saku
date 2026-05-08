@@ -49,8 +49,6 @@ export const getCategoryTypesById = async (
       // const response = await axios.delete(`/api/items/${id}`);
       // return response.data;
 
-      console.log(`[API LAYER] Request delete dikirim untuk ID: ${id}`)
-
       // Simulasi response sukses
       resolve(categoryTypes.find((categoryType) => categoryType.id === id))
 

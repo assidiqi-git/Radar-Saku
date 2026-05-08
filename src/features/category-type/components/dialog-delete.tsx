@@ -6,7 +6,6 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-  AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
 import { Button } from "@/components/ui/button"
 
@@ -20,7 +19,7 @@ interface DialogFormEditProps {
 }
 
 export function DialogDelete({ id, open, setOpen }: DialogFormEditProps) {
-  const { isSuccess, isLoading, error, deleteData } = useDeleteCategoryType()
+  const { isLoading, deleteData } = useDeleteCategoryType()
 
   const onDelete = async () => {
     if (!id) return
@@ -38,9 +37,6 @@ export function DialogDelete({ id, open, setOpen }: DialogFormEditProps) {
 
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
-      <AlertDialogTrigger asChild>
-        <Button variant="outline">Show Dialog</Button>
-      </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
