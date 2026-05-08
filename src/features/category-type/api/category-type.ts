@@ -76,6 +76,6 @@ export const deleteCategoryType = async (id: string): Promise<any> => {
 
       // Jika ingin mengetes error, uncomment baris di bawah ini dan comment resolve di atas:
       // reject(new Error('Gagal terhubung ke server saat menghapus data.'));
-    }, 1500)
+    }, 500)
   })
 }
