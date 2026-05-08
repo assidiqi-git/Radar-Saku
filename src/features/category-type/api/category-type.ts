@@ -40,5 +40,42 @@ export const getCategoryTypesById = async (
 ): Promise<CategoryType> => {
   await new Promise((resolve) => setTimeout(resolve, 1500))
 
-  return categoryTypes.find((categoryType) => categoryType.id === id)
+  // return
+
+  return new Promise((resolve, reject) => {
+    // Simulasi delay jaringan selama 1.5 detik
+    setTimeout(() => {
+      // Nanti ganti dengan:
+      // const response = await axios.delete(`/api/items/${id}`);
+      // return response.data;
+
+      console.log(`[API LAYER] Request delete dikirim untuk ID: ${id}`)
+
+      // Simulasi response sukses
+      resolve(categoryTypes.find((categoryType) => categoryType.id === id))
+
+      // Jika ingin mengetes error, uncomment baris di bawah ini dan comment resolve di atas:
+      // reject(new Error('Gagal terhubung ke server saat menghapus data.'));
+    }, 1500)
+  })
+}
+
+export const deleteCategoryType = async (id: string): Promise<any> => {
+  return new Promise((resolve, reject) => {
+    // Simulasi delay jaringan selama 1.5 detik
+    setTimeout(() => {
+      // Nanti ganti dengan:
+      // const response = await axios.delete(`/api/items/${id}`);
+      // return response.data;
+
+      // Simulasi response sukses
+      resolve({
+        success: true,
+        message: `Data dengan ID ${id} berhasil dihapus.`,
+      })
+
+      // Jika ingin mengetes error, uncomment baris di bawah ini dan comment resolve di atas:
+      // reject(new Error('Gagal terhubung ke server saat menghapus data.'));
+    }, 1500)
+  })
 }

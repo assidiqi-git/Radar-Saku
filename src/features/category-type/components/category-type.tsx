@@ -20,11 +20,13 @@ import { DialogFormCreate } from "./dialog-form-create"
 import { useGetCategoryType } from "../hooks/use-get-category-type"
 import { PencilIcon, Trash2 } from "lucide-react"
 import { DialogFormEdit } from "./dialog-form-edit"
+import { DialogDelete } from "./dialog-delete"
 
 export function CategoryTypes() {
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false)
   const [isDialogEditOpen, setIsDialogEditOpen] = useState<boolean>(false)
   const [selectedId, setSelectedId] = useState<string | null>(null)
+  const [isDialogDeleteOpen, setIsDialogDeleteOpen] = useState<boolean>(false)
 
   const { categoryTypes, isLoading, error, fetchCategoryTypes } =
     useGetCategoryType()
@@ -38,6 +40,11 @@ export function CategoryTypes() {
     setIsDialogEditOpen(true)
   }
 
+  function handleDelete(id: string) {
+    setSelectedId(id)
+    setIsDialogDeleteOpen(true)
+  }
+
   return (
     <div className="grid grid-cols-1 gap-4">
       <DialogFormCreate open={isDialogOpen} setOpen={setIsDialogOpen} />
@@ -46,6 +53,11 @@ export function CategoryTypes() {
         setOpen={setIsDialogEditOpen}
         id={selectedId}
       ></DialogFormEdit>
+      <DialogDelete
+        id={selectedId}
+        open={isDialogDeleteOpen}
+        setOpen={setIsDialogDeleteOpen}
+      ></DialogDelete>
       <Card>
         <CardHeader className="w-full">
           <CardTitle>Tipe Kategori</CardTitle>
@@ -93,6 +105,7 @@ export function CategoryTypes() {
                         <PencilIcon />
                       </Button>
                       <Button
+                        onClick={() => handleDelete(categoryType.id)}
                         variant="destructive"
                         size="icon"
                         aria-label="Hapus"
