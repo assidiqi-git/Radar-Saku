@@ -5,49 +5,27 @@ import { type CategoryType } from "../types"
 const categoryTypes = [
   {
     id: "OIASNDIOUASN1",
-    name: "Paid",
+    name: "Pemasukan",
     action: "addition",
     description: "Credit Card",
   },
   {
     id: "OIASNDIOUASN2",
-    name: "Pending",
+    name: "Pengeluaran",
     action: "deduction",
     description: "PayPal",
   },
   {
     id: "OIASNDIOUASN3",
-    name: "Unpaid",
-    action: "addition",
+    name: "Transfer Antar Bank Sendiri",
+    action: "neutral",
     description: "Bank Transfer",
-  },
-  {
-    id: "OIASNDIOUASN4",
-    name: "Paid",
-    action: "deduction",
-    description: "Credit Card",
-  },
-  {
-    id: "OIASNDIOUASN5",
-    name: "Paid",
-    action: "addition",
-    description: "PayPal",
-  },
-  {
-    id: "OIASNDIOUASN6",
-    name: "Pending",
-    action: "deduction",
-    description: "Bank Transfer",
-  },
-  {
-    id: "OIASNDIOUASN7",
-    name: "Unpaid",
-    action: "addition",
-    description: "Credit Card",
   },
 ]
 
 export const getCategoryTypes = async (): Promise<CategoryType[]> => {
+  await new Promise((resolve) => setTimeout(resolve, 1500))
+
   return categoryTypes
 
   // Endpoint standar Laravel Sanctum untuk mengambil profil user yang login

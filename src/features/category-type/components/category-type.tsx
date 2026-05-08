@@ -33,14 +33,6 @@ export function CategoryTypes() {
     fetchCategoryTypes()
   }, [fetchCategoryTypes])
 
-  if (isLoading) {
-    return <div className="p-4 text-center">Memuat data secara modular...</div>
-  }
-
-  if (error) {
-    return <div className="p-4 text-red-500">Error: {error}</div>
-  }
-
   function handleDialogEdit(id: string) {
     setSelectedId(id)
     setIsDialogEditOpen(true)
@@ -61,48 +53,59 @@ export function CategoryTypes() {
             <Button onClick={() => setIsDialogOpen(true)}>Add</Button>
           </CardAction>
         </CardHeader>
-        <CardContent>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead className="w-25">No.</TableHead>
-                <TableHead>Name</TableHead>
-                <TableHead>Action</TableHead>
-                <TableHead>Description</TableHead>
-                <TableHead className="text-right">#</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {categoryTypes.map((categoryType, index) => (
-                <TableRow key={categoryType.id}>
-                  <TableCell className="font-medium">{index + 1}</TableCell>
-                  <TableCell>{categoryType.name}</TableCell>
-                  <TableCell>
-                    {categoryType.action.toLocaleUpperCase()}
-                  </TableCell>
-                  <TableCell>{categoryType.description}</TableCell>
-                  <TableCell className="text-right">
-                    <Button
-                      variant="outline"
-                      size="icon"
-                      aria-label="Edit"
-                      onClick={() => handleDialogEdit(categoryType.id)}
-                    >
-                      <PencilIcon />
-                    </Button>
-                    <Button
-                      variant="destructive"
-                      size="icon"
-                      aria-label="Hapus"
-                    >
-                      <Trash2 />
-                    </Button>
-                  </TableCell>
+
+        {isLoading && (
+          <div className="p-4 text-center">Memuat data secara modular...</div>
+        )}
+
+        {!isLoading && error && (
+          <div className="p-4 text-red-500">Error: {error}</div>
+        )}
+
+        {!isLoading && !error && categoryTypes && (
+          <CardContent>
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead className="w-25">No.</TableHead>
+                  <TableHead>Name</TableHead>
+                  <TableHead>Action</TableHead>
+                  <TableHead>Description</TableHead>
+                  <TableHead className="text-right">#</TableHead>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </CardContent>
+              </TableHeader>
+              <TableBody>
+                {categoryTypes.map((categoryType, index) => (
+                  <TableRow key={categoryType.id}>
+                    <TableCell className="font-medium">{index + 1}</TableCell>
+                    <TableCell>{categoryType.name}</TableCell>
+                    <TableCell>
+                      {categoryType.action.toLocaleUpperCase()}
+                    </TableCell>
+                    <TableCell>{categoryType.description}</TableCell>
+                    <TableCell className="text-right">
+                      <Button
+                        variant="outline"
+                        size="icon"
+                        aria-label="Edit"
+                        onClick={() => handleDialogEdit(categoryType.id)}
+                      >
+                        <PencilIcon />
+                      </Button>
+                      <Button
+                        variant="destructive"
+                        size="icon"
+                        aria-label="Hapus"
+                      >
+                        <Trash2 />
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </CardContent>
+        )}
       </Card>
     </div>
   )
