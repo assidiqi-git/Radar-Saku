@@ -66,11 +66,11 @@ export function DialogFormEdit() {
           <div className="p-4 text-center">Memuat detail post...</div>
         )}
 
-        {isError && (
+        {!isLoading && isError && (
           <div className="p-4 text-red-500">Error: {error.message}</div>
         )}
 
-        {data && (
+        {!isLoading && !isError && data && (
           <>
             <form id="form-rhf-demo" onSubmit={form.handleSubmit(handleUpdate)}>
               <FieldGroup>
