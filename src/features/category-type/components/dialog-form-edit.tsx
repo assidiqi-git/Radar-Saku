@@ -80,12 +80,12 @@ export function DialogFormEdit() {
                     control={form.control}
                     render={({ field, fieldState }) => (
                       <Field data-invalid={fieldState.invalid}>
-                        <FieldLabel htmlFor="form-rhf-demo-title">
+                        <FieldLabel htmlFor="form-edit-name">
                           Nama Tipe Kategori
                         </FieldLabel>
                         <Input
                           {...field}
-                          id="form-rhf-demo-title"
+                          id="form-edit-name"
                           aria-invalid={fieldState.invalid}
                           placeholder="Login button not working on mobile"
                           autoComplete="off"
@@ -101,7 +101,7 @@ export function DialogFormEdit() {
                     control={form.control}
                     render={({ field, fieldState }) => (
                       <Field data-invalid={fieldState.invalid}>
-                        <FieldLabel htmlFor="form-rhf-demo-title">
+                        <FieldLabel htmlFor="form-edit-action">
                           Aksi Tipe Kategori
                         </FieldLabel>
                         <Select
@@ -109,7 +109,10 @@ export function DialogFormEdit() {
                           {...field}
                           onValueChange={field.onChange}
                         >
-                          <SelectTrigger className="w-full">
+                          <SelectTrigger
+                            className="w-full"
+                            id="form-edit-action"
+                          >
                             <SelectValue placeholder="Pilih action" />
                           </SelectTrigger>
                           <SelectContent>
@@ -133,12 +136,12 @@ export function DialogFormEdit() {
                     control={form.control}
                     render={({ field, fieldState }) => (
                       <Field data-invalid={fieldState.invalid}>
-                        <FieldLabel htmlFor="form-rhf-demo-title">
+                        <FieldLabel htmlFor="form-edit-description">
                           Deskripsi
                         </FieldLabel>
                         <Input
                           {...field}
-                          id="form-rhf-demo-title"
+                          id="form-edit-description"
                           aria-invalid={fieldState.invalid}
                           placeholder="Lorem ipsum dolor sit amet."
                           autoComplete="off"

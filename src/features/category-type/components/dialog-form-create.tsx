@@ -67,12 +67,12 @@ export function DialogFormCreate() {
                   control={form.control}
                   render={({ field, fieldState }) => (
                     <Field data-invalid={fieldState.invalid}>
-                      <FieldLabel htmlFor="form-rhf-demo-title">
+                      <FieldLabel htmlFor="form-create-name">
                         Nama Tipe Kategori
                       </FieldLabel>
                       <Input
                         {...field}
-                        id="form-rhf-demo-title"
+                        id="form-create-name"
                         aria-invalid={fieldState.invalid}
                         placeholder="Login button not working on mobile"
                         autoComplete="off"
@@ -88,11 +88,14 @@ export function DialogFormCreate() {
                   control={form.control}
                   render={({ field, fieldState }) => (
                     <Field data-invalid={fieldState.invalid}>
-                      <FieldLabel htmlFor="form-rhf-demo-title">
+                      <FieldLabel htmlFor="form-create-action">
                         Aksi Tipe Kategori
                       </FieldLabel>
                       <Select {...field} onValueChange={field.onChange}>
-                        <SelectTrigger className="w-full">
+                        <SelectTrigger
+                          className="w-full"
+                          id="form-create-action"
+                        >
                           <SelectValue placeholder="Select a fruit" />
                         </SelectTrigger>
                         <SelectContent>
@@ -114,12 +117,12 @@ export function DialogFormCreate() {
                   control={form.control}
                   render={({ field, fieldState }) => (
                     <Field data-invalid={fieldState.invalid}>
-                      <FieldLabel htmlFor="form-rhf-demo-title">
+                      <FieldLabel htmlFor="form-create-description">
                         Deskripsi
                       </FieldLabel>
                       <Input
                         {...field}
-                        id="form-rhf-demo-title"
+                        id="form-create-description"
                         aria-invalid={fieldState.invalid}
                         placeholder="Login button not working on mobile"
                         autoComplete="off"
