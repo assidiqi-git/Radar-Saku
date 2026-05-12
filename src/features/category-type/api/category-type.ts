@@ -1,66 +1,44 @@
 import { axiosInstance } from "@/lib/axios"
 
-import { type CategoryType } from "../types"
+import { type ApiResponse, type CategoryType } from "../types"
+import type { CategoryTypeValues } from "../schemas/category-schema"
 
-const categoryTypes = [
-  {
-    id: "OIASNDIOUASN1",
-    name: "Pemasukan",
-    action: "addition",
-    description: "Credit Card",
-  },
-  {
-    id: "OIASNDIOUASN2",
-    name: "Pengeluaran",
-    action: "deduction",
-    description: "PayPal",
-  },
-  {
-    id: "OIASNDIOUASN3",
-    name: "Transfer Antar Bank Sendiri",
-    action: "neutral",
-    description: "Bank Transfer",
-  },
-]
+export const createCategoryType = async (
+  data: CategoryTypeValues
+): Promise<ApiResponse> => {
+  const response = await axiosInstance.post<ApiResponse>(
+    "/api/transaction-types",
+    data
+  )
+  return response.data
+}
 
 export const getCategoryTypes = async (): Promise<CategoryType[]> => {
-  // await new Promise((resolve) => setTimeout(resolve, 1500))
-
-  // return categoryTypes
-
-  // Endpoint standar Laravel Sanctum untuk mengambil profil user yang login
-  const response = await axiosInstance.get<{ data: CategoryType[] }>(
-    "/api/transaction-types"
-  )
+  const response = await axiosInstance.get("/api/transaction-types")
   return response.data.data
 }
 
 export const getCategoryTypesById = async (
   id: string
 ): Promise<CategoryType> => {
-  const response = await axiosInstance.get<{ data: CategoryType }>(
-    `/api/transaction-types/${id}`
-  )
+  const response = await axiosInstance.get(`/api/transaction-types/${id}`)
 
   return response.data.data
 }
 
-export const deleteCategoryType = async (id: string): Promise<any> => {
-  return new Promise((resolve, reject) => {
-    // Simulasi delay jaringan selama 1.5 detik
-    setTimeout(() => {
-      // Nanti ganti dengan:
-      // const response = await axios.delete(`/api/items/${id}`);
-      // return response.data;
+export const updateCategoryType = async ({
+  id,
+  data,
+}: {
+  id: string
+  data: CategoryTypeValues
+}): Promise<void> => {
+  const response = await axiosInstance.put(`/api/transaction-types/${id}`, data)
+  return response.data
+}
 
-      // Simulasi response sukses
-      resolve({
-        success: true,
-        message: `Data dengan ID ${id} berhasil dihapus.`,
-      })
+export const deleteCategoryType = async (id: string): Promise<CategoryType> => {
+  const response = await axiosInstance.delete(`/api/transaction-types/${id}`)
 
-      // Jika ingin mengetes error, uncomment baris di bawah ini dan comment resolve di atas:
-      // reject(new Error('Gagal terhubung ke server saat menghapus data.'));
-    }, 500)
-  })
+  return response.data.data
 }

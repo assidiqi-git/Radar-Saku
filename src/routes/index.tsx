@@ -9,7 +9,7 @@ import MainLayout from "@/components/layouts/MainLayout"
 import { AppInitializer } from "@/components/layouts/AppInitializer"
 import Post from "@/features/post/components/post"
 import DetailPost from "@/features/post/components/detail-post"
-import { CategoryTypes } from "@/features/category-type/components/category-type"
+import { CategoryTypes } from "@/features/category-type/components/category-types"
 
 // Pages (Idealnya di-import secara lazy loading untuk performa)
 // import { WalletList } from '@/features/wallets/components/WalletList';

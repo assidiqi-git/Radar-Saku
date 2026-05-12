@@ -28,26 +28,29 @@ import {
   FieldGroup,
   FieldLabel,
 } from "@/components/ui/field"
+import { useSubmitCategoryType } from "../hooks/use-submit-category-type"
+import { useCategoryTypeStore } from "../store/category-type-store"
+import { toast } from "sonner"
 
-interface DialogFormCreateProps {
-  open: boolean
-  setOpen: (open: boolean) => void
-}
+export function DialogFormCreate() {
+  const { isDialogCreateOpen, closeDialogCreate } = useCategoryTypeStore()
 
-export function DialogFormCreate({ open, setOpen }: DialogFormCreateProps) {
   const form = useForm<CategoryTypeValues>({
     resolver: zodResolver(categoryTypeSchema),
     defaultValues: { name: "", action: "neutral", description: "" },
   })
-  const onSubmit = (values: CategoryTypeValues) => {
-    // mutate(values) // Ini akan memicu alur Sanctum -> Login -> Get User -> Zustand -> Redirect
 
-    console.log(values)
-    setOpen(false)
+  const { mutate } = useSubmitCategoryType()
+  const onSubmit = (values: CategoryTypeValues) => {
+    mutate(values)
+
+    form.reset()
+    closeDialogCreate()
+    toast.success("data berhasil ditambahkan")
   }
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog open={isDialogCreateOpen} onOpenChange={closeDialogCreate}>
       <form>
         <DialogContent className="sm:max-w-lg">
           <DialogHeader>

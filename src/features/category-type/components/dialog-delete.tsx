@@ -9,34 +9,26 @@ import {
 } from "@/components/ui/alert-dialog"
 import { Button } from "@/components/ui/button"
 
+import { useCategoryTypeStore } from "../store/category-type-store"
 import { useDeleteCategoryType } from "../hooks/use-delete-category-type"
 import { toast } from "sonner"
 
-interface DialogFormEditProps {
-  open: boolean
-  setOpen: (open: boolean) => void
-  id: string | null
-}
+export function DialogDelete() {
+  const { isDialogDeleteOpen, closeDialogDelete, deletingId } =
+    useCategoryTypeStore()
+  const { mutate: deleteCategory, isPending } = useDeleteCategoryType()
 
-export function DialogDelete({ id, open, setOpen }: DialogFormEditProps) {
-  const { isLoading, deleteData } = useDeleteCategoryType()
+  if (!isDialogDeleteOpen) return null
 
-  const onDelete = async () => {
-    if (!id) return
-
-    try {
-      await deleteData(id)
-
-      setOpen(false)
-      toast.success("berhasil hapus data")
-    } catch (err) {
-      console.error("Gagal menghapus data", err)
-      toast.error("Gagal menghapus data")
+  const handleDelete = () => {
+    if (deletingId) {
+      deleteCategory(deletingId)
+      toast("berhasil menghapus data")
     }
   }
 
   return (
-    <AlertDialog open={open} onOpenChange={setOpen}>
+    <AlertDialog open={isDialogDeleteOpen} onOpenChange={closeDialogDelete}>
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
@@ -50,9 +42,9 @@ export function DialogDelete({ id, open, setOpen }: DialogFormEditProps) {
           <Button
             type="button"
             variant="destructive"
-            onClick={() => onDelete()}
+            onClick={() => handleDelete()}
           >
-            {isLoading ? "Loading" : "Delete"}
+            {isPending ? "Loading" : "Delete"}
           </Button>
         </AlertDialogFooter>
       </AlertDialogContent>

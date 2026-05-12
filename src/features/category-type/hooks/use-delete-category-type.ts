@@ -1,33 +1,51 @@
 // src/hooks/useDeleteItem.ts
-import { useState } from "react"
 import { deleteCategoryType } from "../api/category-type"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
+import { useCategoryTypeStore } from "../store/category-type-store"
+import { AxiosError } from "axios"
+import { toast } from "sonner"
 
 export const useDeleteCategoryType = () => {
-  const [isLoading, setIsLoading] = useState<boolean>(false)
-  const [error, setError] = useState<string | null>(null)
-  const [isSuccess, setIsSuccess] = useState<boolean>(false)
+  const queryClient = useQueryClient()
+  const closeDeleteModal = useCategoryTypeStore(
+    (state) => state.closeDialogDelete
+  )
 
-  const deleteData = async (id: string) => {
-    // Reset state sebelum request dimulai
-    setIsLoading(true)
-    setError(null)
-    setIsSuccess(false)
+  return useMutation({
+    mutationFn: (id: string) => deleteCategoryType(id),
+    onSuccess: () => {
+      // Refresh list categoryType setelah berhasil dihapus
+      queryClient.invalidateQueries({ queryKey: ["categoryTypes"] })
 
-    try {
-      // Memanggil API layer
-      const response = await deleteCategoryType(id)
+      // Tutup modal secara otomatis
+      closeDeleteModal()
 
-      setIsSuccess(true)
-      return response // Mengembalikan response jika komponen butuh data kembalian
-    } catch (err: any) {
-      const errorMessage =
-        err.message || "Terjadi kesalahan yang tidak diketahui"
-      setError(errorMessage)
-      throw err // Lempar error agar bisa ditangkap oleh komponen UI (opsional)
-    } finally {
-      setIsLoading(false)
-    }
-  }
+      // Catatan: Anda bisa menambahkan trigger Toast notification di sini
+      // toast.success("Kategori berhasil dihapus");
+    },
+    onError: (error) => {
+      if (error instanceof AxiosError) {
+        // Cek status code
+        const status = error.response?.status
 
-  return { deleteData, isLoading, error, isSuccess }
+        if (status === 409) {
+          console.error("Gagal: Data sedang digunakan (Foreign Key Constraint)")
+          toast.error(
+            "Kategori ini tidak dapat dihapus karena masih digunakan oleh data lain."
+          )
+        } else if (status === 404) {
+          console.error("Gagal: Data tidak ditemukan")
+          toast.error("Kategori sudah tidak ada di sistem.")
+        } else {
+          // Tangkap pesan error dari backend jika ada (misal dari format response API Anda)
+          const backendMessage = error.response?.data?.message
+          console.error(`Gagal: ${backendMessage || "Server error"}`)
+          toast.error(backendMessage || "Terjadi kesalahan pada server")
+        }
+      } else {
+        // Error di luar Axios (misal network mati atau salah kode)
+        console.error("Terjadi kesalahan sistem:", error)
+      }
+    },
+  })
 }

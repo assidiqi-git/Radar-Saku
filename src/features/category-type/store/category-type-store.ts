@@ -1,36 +1,32 @@
 // store/postStore.ts
 import { create } from "zustand"
-import { type CategoryType } from "../types"
 
 interface CategoryTypeState {
-  // List Category Types
-  categoryTypes: CategoryType[]
-  isLoading: boolean
-  error: string | null
-  setCategoryTypes: (categoryTypes: CategoryType[]) => void
-  setIsLoading: (isLoading: boolean) => void
-  setError: (error: string | null) => void
+  isDialogCreateOpen: boolean
+  isDialogEditOpen: boolean
+  isDialogDeleteOpen: boolean
+  editingId: string | null
+  deletingId: string | null
 
-  currentCategoryType: CategoryType | null
-  isDetailLoading: boolean
-  detailError: string | null
-  setCurrentCategoryType: (categoryType: CategoryType | null) => void
-  setIsDetailLoading: (isDetailLoading: boolean) => void
-  setDetailError: (error: string | null) => void
+  openDialogEdit: (id: string) => void
+  closeDialogEdit: () => void
+  openDialogCreate: () => void
+  closeDialogCreate: () => void
+  openDialogDelete: (id: string) => void
+  closeDialogDelete: () => void
 }
 
 export const useCategoryTypeStore = create<CategoryTypeState>((set) => ({
-  categoryTypes: [],
-  isLoading: false,
-  error: null,
-  setCategoryTypes: (categoryTypes) => set({ categoryTypes }),
-  setIsLoading: (isLoading) => set({ isLoading }),
-  setError: (error) => set({ error }),
+  isDialogCreateOpen: false,
+  isDialogEditOpen: false,
+  isDialogDeleteOpen: false,
+  editingId: null,
+  deletingId: null,
 
-  currentCategoryType: null,
-  isDetailLoading: false,
-  detailError: null,
-  setCurrentCategoryType: (currentCategoryType) => set({ currentCategoryType }),
-  setIsDetailLoading: (isDetailLoading) => set({ isDetailLoading }),
-  setDetailError: (detailError) => ({ detailError }),
+  openDialogCreate: () => set({ isDialogCreateOpen: true }),
+  closeDialogCreate: () => set({ isDialogCreateOpen: false }),
+  openDialogEdit: (id) => set({ editingId: id, isDialogEditOpen: true }),
+  closeDialogEdit: () => set({ editingId: null, isDialogEditOpen: false }),
+  openDialogDelete: (id) => set({ deletingId: id, isDialogDeleteOpen: true }),
+  closeDialogDelete: () => set({ editingId: null, isDialogDeleteOpen: false }),
 }))

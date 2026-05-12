@@ -29,49 +29,32 @@ import {
   FieldLabel,
 } from "@/components/ui/field"
 import { useCategoryTypeEdit } from "../hooks/use-category-type-edit"
-import { useEffect } from "react"
+import { useCategoryTypeStore } from "../store/category-type-store"
+import { useUpdateCategoryType } from "../hooks/use-update-category-type"
 
-interface DialogFormEditProps {
-  open: boolean
-  setOpen: (open: boolean) => void
-  id: string | null
-}
-
-export function DialogFormEdit({ id, open, setOpen }: DialogFormEditProps) {
-  const {
-    currentCategoryType,
-    isDetailLoading,
-    detailError,
-    fetchCategoryTypeDetail,
-  } = useCategoryTypeEdit()
-
-  console.log(currentCategoryType?.action)
+export function DialogFormEdit() {
+  const { isDialogEditOpen, closeDialogEdit, editingId } =
+    useCategoryTypeStore()
+  const { data, isLoading, isError, error } = useCategoryTypeEdit()
+  const { mutate: updateCategoryType } = useUpdateCategoryType()
 
   const form = useForm<CategoryTypeValues>({
     resolver: zodResolver(categoryTypeSchema),
     values: {
-      name: currentCategoryType?.name || "",
-      action: currentCategoryType?.action || "neutral", // pastikan fallback value sesuai dengan tipe data
-      description: currentCategoryType?.description || "",
+      name: data?.name || "",
+      action: data?.action || "neutral", // pastikan fallback value sesuai dengan tipe data
+      description: data?.description || "",
     },
   })
 
-  const onSubmit = (values: CategoryTypeValues) => {
-    // mutate(values) // Ini akan memicu alur Sanctum -> Login -> Get User -> Zustand -> Redirect
-
-    console.log(values)
-    setOpen(false)
+  const handleUpdate = (values: CategoryTypeValues) => {
+    if (editingId) {
+      updateCategoryType({ id: String(editingId), data: values })
+    }
   }
 
-  useEffect(() => {
-    // Pastikan ID ada dan ubah menjadi number sebelum memanggil API
-    if (id !== null) {
-      fetchCategoryTypeDetail(String(id))
-    }
-  }, [id, fetchCategoryTypeDetail])
-
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog open={isDialogEditOpen} onOpenChange={closeDialogEdit}>
       <DialogContent className="sm:max-w-lg">
         <DialogHeader>
           <DialogTitle>Edit Category Type</DialogTitle>
@@ -79,17 +62,17 @@ export function DialogFormEdit({ id, open, setOpen }: DialogFormEditProps) {
             Lorem ipsum dolor sit amet consectetur.
           </DialogDescription>
         </DialogHeader>
-        {isDetailLoading && (
+        {isLoading && (
           <div className="p-4 text-center">Memuat detail post...</div>
         )}
 
-        {detailError && (
-          <div className="p-4 text-red-500">Error: {detailError}</div>
+        {isError && (
+          <div className="p-4 text-red-500">Error: {error.message}</div>
         )}
 
-        {currentCategoryType && (
+        {data && (
           <>
-            <form id="form-rhf-demo" onSubmit={form.handleSubmit(onSubmit)}>
+            <form id="form-rhf-demo" onSubmit={form.handleSubmit(handleUpdate)}>
               <FieldGroup>
                 <div className="space-y-4">
                   <Controller
@@ -121,7 +104,11 @@ export function DialogFormEdit({ id, open, setOpen }: DialogFormEditProps) {
                         <FieldLabel htmlFor="form-rhf-demo-title">
                           Aksi Tipe Kategori
                         </FieldLabel>
-                        <Select key={field.value} {...field} onValueChange={field.onChange}>
+                        <Select
+                          key={field.value}
+                          {...field}
+                          onValueChange={field.onChange}
+                        >
                           <SelectTrigger className="w-full">
                             <SelectValue placeholder="Pilih action" />
                           </SelectTrigger>
