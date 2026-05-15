@@ -52,3 +52,11 @@ axiosInstance.interceptors.response.use(
     return Promise.reject(error)
   }
 )
+
+/**
+ * Fetch CSRF cookie dari Sanctum sebelum login/register.
+ * Harus dipanggil sekali sebelum POST /login atau /register.
+ */
+export async function getCsrfCookie(): Promise<void> {
+  await axiosInstance.get("/sanctum/csrf-cookie")
+}
