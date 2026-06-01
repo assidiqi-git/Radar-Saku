@@ -71,9 +71,7 @@ export function CategoryTypes() {
                         {index + 1} {categoryType.id}
                       </TableCell>
                       <TableCell>{categoryType.name}</TableCell>
-                      <TableCell>
-                        {categoryType.action.toLocaleUpperCase()}
-                      </TableCell>
+                      <TableCell>{categoryType.action}</TableCell>
                       <TableCell>{categoryType.description}</TableCell>
                       <TableCell className="text-right">
                         <Button

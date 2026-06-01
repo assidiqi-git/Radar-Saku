@@ -6,7 +6,10 @@ import App from "./App.tsx"
 import { ThemeProvider } from "@/components/theme-provider.tsx"
 
 async function enableMocking() {
-  if (import.meta.env.MODE !== "development") {
+  if (
+    import.meta.env.MODE !== "development" ||
+    import.meta.env.VITE_ENABLE_MSW === "false"
+  ) {
     return
   }
 
@@ -20,6 +23,6 @@ enableMocking().then(() => {
       <ThemeProvider>
         <App />
       </ThemeProvider>
-    </StrictMode>,
+    </StrictMode>
   )
 })
